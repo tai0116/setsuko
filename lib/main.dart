@@ -11,25 +11,25 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: _title,
-      home: MyStatefulWidget(),
+      home: RootScreen(),
     );
   }
 }
 
-class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({Key? key}) : super(key: key);
+class RootScreen extends StatefulWidget {
+  const RootScreen({Key? key}) : super(key: key);
 
   @override
-  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
+  State<RootScreen> createState() => _RootScreen();
 }
 
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+class _RootScreen extends State<RootScreen> {
   int _selectedIndex = 0;
 
   static final List<Widget> _bodies = <Widget>[
-    Scaffold(appBar: AppBar(), drawer: const Drawer()),
-    Scaffold(appBar: AppBar()),
-    Scaffold(appBar: AppBar()),
+    Home(appBar: AppBar(), drawer: const Drawer()),
+    Message(appBar: AppBar()),
+    Favorite(appBar: AppBar()),
   ];
 
   void _onItemTapped(int index) {
@@ -62,5 +62,42 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         onTap: _onItemTapped,
       ),
     );
+  }
+}
+
+class Home extends StatelessWidget {
+  final AppBar appBar;
+  final Drawer drawer;
+
+  const Home({Key? key, required this.appBar, required this.drawer}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      drawer: const Drawer(),
+    );
+  }
+}
+
+class Message extends StatelessWidget {
+  final AppBar appBar;
+
+  const Message({Key? key, required this.appBar}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(appBar: AppBar());
+  }
+}
+
+class Favorite extends StatelessWidget {
+  final AppBar appBar;
+
+  const Favorite({Key? key, required this.appBar}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(appBar: AppBar());
   }
 }
