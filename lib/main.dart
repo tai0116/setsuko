@@ -11,25 +11,31 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: _title,
-      home: MyStatefulWidget(),
+      home: RootScreen(),
     );
   }
 }
 
-class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({Key? key}) : super(key: key);
+class RootScreen extends StatefulWidget {
+  const RootScreen({Key? key}) : super(key: key);
 
   @override
-  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
+  State<RootScreen> createState() => _RootScreen();
 }
 
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+class _RootScreen extends State<RootScreen> {
   int _selectedIndex = 0;
 
+  static final List<AppBar> _headers = <AppBar>[
+    AppBar(),
+    AppBar(leading: const EmptyLeading()),
+    AppBar(leading: const EmptyLeading()),
+  ];
+
   static final List<Widget> _bodies = <Widget>[
-    Scaffold(appBar: AppBar(), drawer: const Drawer()),
-    Scaffold(appBar: AppBar()),
-    Scaffold(appBar: AppBar()),
+    const Home(),
+    const Message(),
+    const Favorite(),
   ];
 
   void _onItemTapped(int index) {
@@ -41,6 +47,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const Drawer(),
+      appBar: _headers.elementAt(_selectedIndex),
       body: _bodies.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
@@ -62,5 +70,41 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         onTap: _onItemTapped,
       ),
     );
+  }
+}
+
+class Home extends StatelessWidget {
+  const Home({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold();
+  }
+}
+
+class Message extends StatelessWidget {
+  const Message({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold();
+  }
+}
+
+class Favorite extends StatelessWidget {
+  const Favorite({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold();
+  }
+}
+
+class EmptyLeading extends StatelessWidget {
+  const EmptyLeading({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const SizedBox.shrink();
   }
 }
