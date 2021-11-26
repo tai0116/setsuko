@@ -27,9 +27,9 @@ class _RootScreen extends State<RootScreen> {
   int _selectedIndex = 0;
 
   static final List<Widget> _bodies = <Widget>[
-    Home(appBar: AppBar(), drawer: const Drawer()),
-    Message(appBar: AppBar()),
-    Favorite(appBar: AppBar()),
+    const Home(),
+    const Message(),
+    const Favorite(),
   ];
 
   void _onItemTapped(int index) {
@@ -66,10 +66,7 @@ class _RootScreen extends State<RootScreen> {
 }
 
 class Home extends StatelessWidget {
-  final AppBar appBar;
-  final Drawer drawer;
-
-  const Home({Key? key, required this.appBar, required this.drawer}) : super(key: key);
+  const Home({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -81,9 +78,7 @@ class Home extends StatelessWidget {
 }
 
 class Message extends StatelessWidget {
-  final AppBar appBar;
-
-  const Message({Key? key, required this.appBar}) : super(key: key);
+  const Message({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -92,9 +87,7 @@ class Message extends StatelessWidget {
 }
 
 class Favorite extends StatelessWidget {
-  final AppBar appBar;
-
-  const Favorite({Key? key, required this.appBar}) : super(key: key);
+  const Favorite({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
