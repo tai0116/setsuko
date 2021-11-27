@@ -26,17 +26,7 @@ class RootScreen extends StatefulWidget {
 class _RootScreen extends State<RootScreen> {
   int _selectedIndex = 0;
 
-  static final List<AppBar> _headers = <AppBar>[
-    AppBar(),
-    AppBar(leading: const EmptyLeading()),
-    AppBar(leading: const EmptyLeading()),
-  ];
-
-  static final List<Widget> _bodies = <Widget>[
-    const Home(),
-    const Message(),
-    const Favorite(),
-  ];
+  static final _rootScreenItems = RootScreenItem.initItems;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -48,28 +38,89 @@ class _RootScreen extends State<RootScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const Drawer(),
-      appBar: _headers.elementAt(_selectedIndex),
-      body: _bodies.elementAt(_selectedIndex),
+      appBar: _rootScreenItems.elementAt(_selectedIndex).appBar,
+      body: _rootScreenItems.elementAt(_selectedIndex).body,
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            label: 'home',
-            icon: Icon(Icons.home),
-          ),
-          BottomNavigationBarItem(
-            label: 'message',
-            icon: Icon(Icons.message),
-          ),
-          BottomNavigationBarItem(
-            label: 'favorite',
-            icon: Icon(Icons.favorite),
-          ),
-        ],
+        items: _rootScreenItems.map((e) => e.bottomNavigationBarItem).toList(),
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.amber[800],
         onTap: _onItemTapped,
       ),
     );
+  }
+}
+
+class RootScreenItem {
+  const RootScreenItem({
+    required this.appBar,
+    required this.body,
+    required this.bottomNavigationBarItem,
+  });
+
+  RootScreenItem.fromCategory(RootScreenCategory category)
+      : appBar = category.appBar,
+        body = category.body,
+        bottomNavigationBarItem = category.bottomNavigationBarItem;
+
+  final PreferredSizeWidget appBar;
+  final Widget body;
+  final BottomNavigationBarItem bottomNavigationBarItem;
+
+  static List<RootScreenItem> get initItems {
+    return <RootScreenItem>[
+      for (final category in RootScreenCategory.values)
+        RootScreenItem.fromCategory(category),
+    ];
+  }
+}
+
+enum RootScreenCategory {
+  home,
+  message,
+  favorite,
+}
+
+extension on RootScreenCategory {
+  PreferredSizeWidget get appBar {
+    switch (this) {
+      case RootScreenCategory.home:
+        return AppBar();
+      case RootScreenCategory.message:
+        return AppBar(leading: const EmptyLeading());
+      case RootScreenCategory.favorite:
+        return AppBar(leading: const EmptyLeading());
+    }
+  }
+
+  Widget get body {
+    switch (this) {
+      case RootScreenCategory.home:
+        return const Home();
+      case RootScreenCategory.message:
+        return const Message();
+      case RootScreenCategory.favorite:
+        return const Favorite();
+    }
+  }
+
+  BottomNavigationBarItem get bottomNavigationBarItem {
+    switch (this) {
+      case RootScreenCategory.home:
+        return const BottomNavigationBarItem(
+          label: 'home',
+          icon: Icon(Icons.home),
+        );
+      case RootScreenCategory.message:
+        return const BottomNavigationBarItem(
+          label: 'message',
+          icon: Icon(Icons.message),
+        );
+      case RootScreenCategory.favorite:
+        return const BottomNavigationBarItem(
+          label: 'favorite',
+          icon: Icon(Icons.favorite),
+        );
+    }
   }
 }
 
